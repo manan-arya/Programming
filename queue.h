@@ -12,7 +12,7 @@ class queue{
 
     public:
 
-    queue(int capacity)
+    queue(int capacity = 5)
     {
         data = new T[capacity];
         size = 0;
@@ -40,8 +40,26 @@ class queue{
     {
         if(size == capacity)
         {
-            cout<<"Queue full"<<endl;
-            return;
+            T * new_data = new T[2*capacity];
+
+            int j = 0;
+            for(int i=firstIndex;i<capacity;i++)
+            {
+                new_data[j] = data[i];
+                j++;
+            }
+
+            for(int i=0;i<firstIndex;i++)
+            {
+                new_data[j] = data[i];
+                j++;
+            }
+
+            delete data;
+            data = new_data;
+            firstIndex = 0;
+            nextIndex = size;
+            capacity *= 2;
         }
 
         data[nextIndex] = value;
